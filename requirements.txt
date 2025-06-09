@@ -1,0 +1,12 @@
+# Django and REST Framework
+Django>=4.2,<5.0
+djangorestframework>=3.14,<4.0
+
+# PostgreSQL database adapter
+psycopg[binary]>=3.1,<4.0
+
+# LangChain for LLM integration
+langchain>=0.1.0,<1.0.0
+
+# OpenAI Python SDK
+openai>=1.0.0,<2.0.0
