@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class DockerfileRequest(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     stack_description = models.TextField()
     production_ready = models.BooleanField(default=False)
     generated_dockerfile = models.TextField(blank=True, null=True)

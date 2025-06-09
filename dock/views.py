@@ -12,6 +12,8 @@ class CreateDockerfile(APIView):
     def post(self, request):
         serializer = DockerfileRequestSerializer(data=request.data)
         if serializer.is_valid():
+            dockerfile = generate_dockerfile(serializer.validated_data['stack_description'], serializer.validated_data['production_ready'])
+            serializer.validated_data['generated_dockerfile'] = dockerfile
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -32,10 +34,11 @@ class GetDockerfile(APIView):
 
 
 class UpdateDockerfile(APIView):
-    def put(self, request, pk):
+    def patch(self, request, pk):
         dockerfile = DockerfileRequest.objects.get(pk=pk)
-        serializer = DockerfileRequestSerializer(dockerfile, data=request.data)
+        serializer = DockerfileRequestSerializer(dockerfile, data=request.data, partial=True)
         if serializer.is_valid():
+            dockerfile.generated_dockerfile = generate_dockerfile(serializer.validated_data.get('stack_description', dockerfile.stack_description), serializer.validated_data.get('production_ready', dockerfile.production_ready))
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
