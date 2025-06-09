@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import *
 from .serializer import *
+from .ai_utils import generate_dockerfile
 
 # Create your views here.
 
@@ -45,3 +46,10 @@ class DeleteDockerfile(APIView):
         dockerfile = DockerfileRequest.objects.get(pk=pk)
         dockerfile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class TestDockerfile(APIView):
+    def get(self, request):
+        dockerfile = generate_dockerfile("Node.js", True)
+        return Response(dockerfile)
+        
