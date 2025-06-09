@@ -15,7 +15,6 @@ class DockerfileRequest(models.Model):
         return f"{self.user.username} - {self.stack_description}"
 
     class Meta:
-        verbose_name = "Dockerfile Request"
-        verbose_name_plural = "Dockerfile Requests"
-        ordering = ["-created_at"]
+        db_table = "DockerfileRequest"
+
 

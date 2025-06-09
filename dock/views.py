@@ -3,13 +3,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
-from .serializers import *
+from .serializer import *
 
 # Create your views here.
 
 class CreateDockerfile(APIView):
     def post(self, request):
-        serializer = DockerfileSerializer(data=request.data)
+        serializer = DockerfileRequestSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -18,22 +18,22 @@ class CreateDockerfile(APIView):
 
 class GetAllDockerfiles(APIView):
     def get(self, request):
-        dockerfiles = Dockerfile.objects.all()
-        serializer = DockerfileSerializer(dockerfiles, many=True)
+        dockerfiles = DockerfileRequest.objects.all()
+        serializer = DockerfileRequestSerializer(dockerfiles, many=True)
         return Response(serializer.data)
 
 
 class GetDockerfile(APIView):
     def get(self, request, pk):
-        dockerfile = Dockerfile.objects.get(pk=pk)
-        serializer = DockerfileSerializer(dockerfile)
+        dockerfile = DockerfileRequest.objects.get(pk=pk)
+        serializer = DockerfileRequestSerializer(dockerfile)
         return Response(serializer.data)
 
 
 class UpdateDockerfile(APIView):
     def put(self, request, pk):
-        dockerfile = Dockerfile.objects.get(pk=pk)
-        serializer = DockerfileSerializer(dockerfile, data=request.data)
+        dockerfile = DockerfileRequest.objects.get(pk=pk)
+        serializer = DockerfileRequestSerializer(dockerfile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -42,6 +42,6 @@ class UpdateDockerfile(APIView):
 
 class DeleteDockerfile(APIView):
     def delete(self, request, pk):
-        dockerfile = Dockerfile.objects.get(pk=pk)
+        dockerfile = DockerfileRequest.objects.get(pk=pk)
         dockerfile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
