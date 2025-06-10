@@ -1,13 +1,13 @@
-import { Navbar } from "./components/Navbar"
+
 import './App.css'
-import { ChatInputBar } from "./components/ChatInputBar"
+
+import { Home } from "./pages/Home"
 
 function App() {
 
   return (
     <>
-      <Navbar />
-      <ChatInputBar />
+      <Home />
     </>
   )
 }
